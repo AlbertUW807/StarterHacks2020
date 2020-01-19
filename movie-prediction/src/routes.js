@@ -11,7 +11,7 @@ export function Routes() {
       <Link to="/movie">Movie</Link> 
       <Switch>
         <Route exact path="/"  component={Home} />
-        <Route exact path="/movie/:imdbID" render={() => <Description/>} />
+        <Route exact path="/movie/:imdbID/:Title" render={() => <Description/>} />
       </Switch>
     </div>
   );

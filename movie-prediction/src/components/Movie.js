@@ -13,7 +13,7 @@ const Movie = ({ movie }) => {
       {console.log(JSON.stringify(movie))}
       <div>
         <Link
-          to={`/movie/${movie.imdbID}`}
+          to={`/movie/${movie.imdbID}/${movie.Title}`}
           onClick={() => {
             console.log(JSON.stringify(movie));
 
