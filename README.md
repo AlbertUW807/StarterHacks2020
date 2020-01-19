@@ -8,3 +8,7 @@ StarterHacks Project
 4) NodeJs Starter: https://github.com/MLH/mlh-hackathon-nodejs-starter
 5) StarterHacks2020 Topics: https://starterhacks.github.io/sh-impact-spaces/
 6) Git Commands: https://guides.github.com/introduction/git-handbook/
+
+# Api Links
+http://movie-social-api.herokuapp.com/moviename/news to get news sentiment analysis info for news headlines
+http://movie-social-api.herokuapp.com/moviename/tweets to get the json that has sentiment analysis on tweets info.

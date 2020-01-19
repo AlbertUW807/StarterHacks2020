@@ -1,11 +1,16 @@
 import React from "react";
-
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Jumbotron from 'react-bootstrap/Jumbotron';
 
 const Header = props => {
   return (
-    <header className="App-header">
-      <h2>{props.text}</h2>
-    </header>
+    <Jumbotron fluid>
+      <h1>{props.text}</h1>
+        <p>
+          A One-stop Movie Portal for social media highlights.
+        </p>
+    </Jumbotron>
+    
   );
 };
 
