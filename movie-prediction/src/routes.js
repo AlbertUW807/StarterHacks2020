@@ -6,9 +6,6 @@ import Description from "./components/Description";
 export function Routes() {
   return (
     <div>
-      <Link to="/">Home</Link>
-      <br/>
-      <Link to="/movie">Movie</Link> 
       <Switch>
         <Route exact path="/"  component={Home} />
         <Route exact path="/movie/:imdbID" render={() => <Description/>} />

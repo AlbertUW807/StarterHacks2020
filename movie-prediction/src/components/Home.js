@@ -65,8 +65,12 @@ const Home = () => {
   return (
     <div className="App">
       <div className="m-container">
-        <Header text="Movies Predictor" onClick={refreshPage} />
+        <Header text="MovieConnect" onClick={refreshPage} />
+        <hr></hr>
+        <hr></hr>
         <Search search={search} />
+        <hr></hr>
+        <hr></hr>
         <div className="movies">{retrievedMovies}</div>
       </div>
     </div>
