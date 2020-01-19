@@ -1,7 +1,4 @@
-import React, { useState, createContext, useEffect } from "react";
-// import { withAuthenticator } from "aws-amplify-react";
-// import { Auth } from "aws-amplify";
-// import { signUpConfig, usernameAttributes } from "./utils/signupConfig";
+import React from "react";
 import {  BrowserRouter } from "react-router-dom";
 import { Routes } from "./routes";
 import "./App.css";

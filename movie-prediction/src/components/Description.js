@@ -1,38 +1,42 @@
-import React, { useReducer, useState, useEffect } from "react";
-
-import Header from "./Header";
-import Movie from "./Movie";
-import spinner from "../ajax-loader.gif";
-import Search from "./Search";
-import { initialState, reducer } from "./reducer";
-import axios from "axios";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { TwitterTweetEmbed } from "react-twitter-embed";
+import Jumbotron from "react-bootstrap/Jumbotron";
+import CardGroup from "react-bootstrap/CardGroup";
+import Card from "react-bootstrap/Card";
+// import { Chart } from "react-google-charts";
 
-const MOVIE_API_URL = "https://www.omdbapi.com/?i=tt0371746&apikey=4a3b711b";
 const DEFAULT_PLACEHOLDER_IMAGE =
   "https://www.adorama.com/alc/wp-content/plugins/itc-types/images/no-image.jpg";
 
+  const options = {
+    title: "My Daily Activities",
+    pieHole: 0.4,
+    is3D: false
+  };
+
 const Description = () => {
-  //   const [state, dispatch] = useReducer(reducer, initialState);
   const { imdbID, Title } = useParams();
-  // const { title } = useParams();
   const [title, setTitle] = useState(Title);
   const [movie, setMovie] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  // const [q, setQuery] = useState(imdbID);
   const [positivetweet, setPositivetweet] = useState(null);
   const [negativetweet, setNegativetweet] = useState(null);
-  const [data, setData] = useState(null);
+  const [negativeSentiment, setNegativeSentiment] = useState(null);
+  const [positiveSentiment, setPositiveSentiment] = useState(null);
   const poster =
     movie === null
       ? DEFAULT_PLACEHOLDER_IMAGE
       : movie.Poster === "N/A"
       ? DEFAULT_PLACEHOLDER_IMAGE
       : movie.Poster;
-  // const title = movie == null ? "null" : movie.Title;
   console.log(JSON.stringify(title));
+
+  const data = [
+    ["Positive Tweets Sentiment","Positive Tweets Sentiment"],
+    [negativeSentiment,positiveSentiment]
+  ]
 
   useEffect(() => {
     setLoading(true);
@@ -58,52 +62,66 @@ const Description = () => {
         setLoading(false);
       });
 
-    fetch(`http://movie-social-api.herokuapp.com/${title}/tweets`)
+    fetch(`//movie-social-api.herokuapp.com/${title}/tweets`)
       .then(resp => resp)
       .then(resp => resp.json())
       .then(response => {
         console.log(JSON.stringify(response));
         if (response) {
-          setData(response);
+          console.log(response.negative_sentiment_ratio)
           setNegativetweet(response.most_negative_tweet);
           setPositivetweet(response.most_positive_tweet);
-          // console.log(JSON.stringify(response.Error))
+          // setPositiveSentiment(response)
         } else {
           setError(response.Error);
-          // console.log(JSON.stringify(movie))
         }
-        // setLoading(false);
+        setLoading(false);
       })
       .catch(({ message }) => {
-        // setError(message);
-        // setLoading(false);
+        setError(message);
+        setLoading(false);
       });
   }, []);
-
-  console.log(title);
-  console.log(positivetweet);
-  // console.log(JSON.stringify(negativetweet))
 
   return (
     <div className="App">
       <div className="m-container">
-        <h1>Tweets Analysis</h1>
+        <Jumbotron fluid>
+          <h1>Tweets Analysis</h1>
+        </Jumbotron>
         <h1>{movie && movie.Title}</h1>
         {movie && poster && (
           <img
             width="200"
             alt={`The movie titled: ${movie.Title}`}
             src={poster}
-            // onClick={console.log(JSON.stringify(movie))}
           />
         )}
       </div>
-      <div position="center">
-        {positivetweet && <TwitterTweetEmbed tweetId={positivetweet} />}{" "}
-      </div>
-      <div>
-        {negativetweet && <TwitterTweetEmbed tweetId={negativetweet} />}
-      </div>
+      <CardGroup>
+        <Card>
+          <Card.Title>
+            <div class="align-items-center">Most Positive Tweet</div>
+          </Card.Title>
+          <Card.Body>
+            <div class="card align-items-center">
+              {positivetweet && <TwitterTweetEmbed tweetId={positivetweet} />}
+            </div>
+          </Card.Body>
+        </Card>
+        <Card>
+          <Card.Title>Most Negative Tweet</Card.Title>
+          <Card.Body>
+            <div class="card align-items-center">
+              {negativetweet && <TwitterTweetEmbed tweetId={negativetweet} />}
+            </div>
+          </Card.Body>
+        </Card>
+      </CardGroup>
+
+    
+
+    
     </div>
   );
 };
